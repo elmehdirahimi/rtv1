@@ -1,0 +1,36 @@
+[camera
+<
+look_from(0 0 10)
+look_at(0 0 0)
+translation(27 217 27)
+>
+light
+<
+color(250 250 250)
+position(0 0 0)
+translation(27 27 27)
+>
+sphere
+<
+color(11 250 250)
+position(0 0 0)
+r(4)
+translation(27 27 27)
+>
+plane
+<
+color(130 130 130)
+position(0.5 -2 0)
+direction(0 1 0)
+rotation(0 1 0)
+translation(27 27 27)
+>
+cylinder
+<
+color(250 250 250)
+position(0 0 0)
+r(4)
+direction(0 1 0)
+rotation(0 1 0)
+translation(27 27 27)
+>
