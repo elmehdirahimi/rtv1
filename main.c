@@ -6,12 +6,11 @@
 /*   By: erahimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 11:37:32 by erahimi           #+#    #+#             */
-/*   Updated: 2019/11/10 16:43:02 by erahimi          ###   ########.fr       */
+/*   Updated: 2020/01/25 19:41:39 by erahimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
-
 
 void	put_pixel(t_rt *rt, int x, int y,int color)
 {
@@ -24,86 +23,11 @@ void	put_pixel(t_rt *rt, int x, int y,int color)
 
 static int		key_press(int key, t_rt *rt)
 {
-		if (key == 53)
+	if (key == 53)
 	{
-		free(rt);
+		rt_close(&rt);
 		exit(0);
 	}
-
-	if(key == 124)
-	{
-	   rt->cam.cam_ray.o.x+=0.1;
-     ///rt->light->position.x-=10;
-	}
-
-	if(key == 123)
-	{
-			rt->cam.cam_ray.o.x-=0.1;
-		//	rt->light->position.x+=10;
-	}
-
-	if(key == 126)
-	{
-	  rt->cam.cam_ray.o.y+=0.1;
-////rt->light->position.y+=10;
-
-	}
-
-	if(key == 125)
-	{
-			rt->cam.cam_ray.o.y-=0.1;
-//	rt->light->position.y-=10;
-	}
-	if(key == 69)
-	{
-	   rt->cam.cam_ray.o.z+=1;
-
-	}
-
-	if(key == 78)
-	{
-			rt->cam.cam_ray.o.z-=0.1;
-
-		//	 rt->light->position.z-=10;
-	}
-
-	
-
-	if(key == 86)
-	{
-	  rt->light->position.x+=10;
-
-	}
-
-	if(key == 88)
-	{
-		
-			rt->light->position.x-=10;
-	}
-
-	if(key == 91)
-	{
-	   rt->light->position.y+=10;
-
-	}
-
-	if(key == 84)
-	{
-			rt->light->position.y-=10;
-	}
-	if(key == 83)
-	{
-	   rt->light->position.z+=10;
-
-	}
-
-	if(key == 85)
-	{
-
-			rt->light->position.z-=10;
-	}
-	//print_vect(rt->cam.cam_ray.o);
-	draw(rt);
 	return (0);
 }
 
@@ -111,29 +35,27 @@ static int		key_press(int key, t_rt *rt)
 int main(int argc,char **argv)
 {
 	t_rt *rt;
-	int i;
 
-	i = 0;
 	if(argc == 2)
 	{
-	rt = (t_rt *)malloc(sizeof(t_rt));
-	initialize(rt, argv[1]);
-	if(initialiser(rt, argv[1]) == 1)
-	{
-		if (parser(rt) == 1)
+		rt = (t_rt *)malloc(sizeof(t_rt));
+		if(initialiser(rt, argv[1]) == 1)
 		{
-				corner(rt);
-		draw(rt);
-			mlx_hook(rt->win_ptr, 2, 0, key_press, rt);
-			mlx_loop(rt->mlx_ptr);
+			if (parser(rt) == 1)
+			{
+				initialize(rt, argv[1]);
+				draw(rt);
+				mlx_hook(rt->win_ptr, 17, 0, rt_close, &rt);
+				mlx_hook(rt->win_ptr, 2, 0, key_press, rt);
+				mlx_loop(rt->mlx_ptr);
+			}
+			else
+				ft_putendl("error parsing");
 		}
 		else
-		{
-			printf("erreur\n");
-		}
-		
-	}
-
-	}
+			ft_putendl("error reading file");
+	}	
+	else
+	ft_putendl("usage: ./rtv1 scene_file");
 	return (0);
 }

@@ -2,35 +2,36 @@
 <
 look_from(0 0 10)
 look_at(0 0 0)
-translation(27 217 27)
+translation(0 0 0)
 >
 light
 <
-color(250 250 250)
-position(0 0 0)
-translation(27 27 27)
+color(255 255 255)
+position(0 10 10)
+translation(0 0 0)
 >
 sphere
 <
-color(11 250 250)
+color(10 0 255)
 position(0 0 0)
-r(4)
-translation(27 27 27)
->
-plane
-<
-color(130 130 130)
-position(0.5 -2 0)
-direction(0 1 0)
-rotation(0 1 0)
-translation(27 27 27)
+r(1)
+translation(0 0 0)
 >
 cylinder
 <
-color(250 250 250)
+color(10 60 100)
 position(0 0 0)
-r(4)
+r(1)
 direction(0 1 0)
-rotation(0 1 0)
-translation(27 27 27)
+rotation(0 0 0)
+translation(-2 -1 0)
 >
+plane
+<
+color(10 60 100)
+position(0 0 0)
+direction(0 1 0)
+rotation(160 0 0)
+translation(0 -2 0)
+>
+]

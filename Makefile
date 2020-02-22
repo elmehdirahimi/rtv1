@@ -22,7 +22,12 @@ SRCS =  main.c\
 		sphere.c\
 		parser.c\
 		init_parser.c\
-		add_objects.c
+		add_objects.c\
+		color.c\
+		tools.c\
+		light_checker.c\
+		parse_tools.c\
+		closer.c\
 
 OBJ = main.o\
 	  init.o\
@@ -34,7 +39,12 @@ OBJ = main.o\
 	  sphere.o\
 	  parser.o\
 	  init_parser.o\
-	add_objects.o
+		add_objects.o\
+		color.o\
+		tools.o\
+		light_checker.o\
+		parse_tools.o\
+		closer.o
 
 LIBFT = -L libft -lft
 

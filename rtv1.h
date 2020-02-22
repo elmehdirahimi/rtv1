@@ -62,9 +62,7 @@ typedef struct  s_light
 typedef struct  s_object
 {
 	int 			type;
-	int				 red;
-	int 			blue;
-	int 			green;
+	t_vect color;
     t_vect 			position;
 	t_vect     direction;
 	t_vect     rotation;
@@ -94,11 +92,13 @@ typedef struct	s_rt
 	int nb_line_min;
 	int nb_line;
 	char **image;
+	t_vect  temp_o;
+	t_vect  temp_d;
+	double t3;
+	double max;
+	t_vect up;
+	t_vect to;
 }				t_rt;
-
-
-
-void  print_vect(t_vect vect); ////////// suppppppppppppremer
 void	initialize(t_rt *rt, char *argv);
 t_vect addition(t_vect vect1, t_vect vect2);
 t_vect soustraction(t_vect vect1, t_vect vect2);
@@ -107,11 +107,12 @@ double  dot(t_vect vect1, t_vect vect2);
 double  module(t_vect vect);
 t_vect normale(t_vect vect);
 t_vect  constrector(double x, double y, double z);
+t_vect		project(t_vect direction, t_vect rotation);
 void	put_pixel(t_rt *rt, int x, int y,int color);
 void  draw(t_rt *rt);
-void  print_vect(t_vect vect);
 t_vect  cross(t_vect vect1, t_vect vect2);
 t_vect division(t_vect vect1, t_vect vect2);
+double clamp(double v, double max, double min);
 int  plane_intersection(t_rt *rt, t_object *plane_temp, double *dist);
 int  cylinder_intersection(t_rt *rt, t_object *plane_temp, double *dist);
 int  cone_intersection(t_rt *rt, t_object *cone_temp, double *dist);
@@ -130,5 +131,23 @@ int   parser(t_rt *rt);
 int		ft_new_atoi(char *str, int *j);
 void light_inter(t_rt *rt, double dist);
 void   corner(t_rt *rt);
+void    param_init(t_rt * rt);
+void check_light(t_rt *rt);
+t_vect     get_normal(t_vect vect, t_object *object,t_rt *rt);
+t_vect    get_reflected(t_vect vect, t_vect v, t_object *object,t_rt *rt);
+int     inter(t_rt *rt, t_object *object_temp, double *dist);
+t_object   *intersection(t_rt *rt, double max);
+int  Shading(t_rt *rt, t_object* sphere);
+t_vect   extraConsterctor(char *image, int *j);
+int check_light_format(t_rt *rt, int *k);
+int check_camera_format(t_rt *rt);
+int check_sphere_format(t_rt *rt, int *k);
+int check_cylinder_format(t_rt *rt, int *k);
+int check_plan_format(t_rt *rt, int *k);
+void swap_object(t_rt *rt, t_object *object);
+int cylinder_suit(t_rt *rt, t_object *object, int j, int *k);
+int		rt_close(t_rt **rt);
+int		rt_close1(t_rt **rt);
+int		rt_close2(t_rt **rt);
 
 #endif

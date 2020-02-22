@@ -65,10 +65,9 @@ double		ft_atod(char *str, int *j)
 
 int   initialiser(t_rt *rt, char *argv)
 {
+	
     if ((rt->fd = open(argv, O_RDONLY)) == -1)
-	{
 		return (-1);
-	}
     rt->nb_line = 0;
 	rt->light = NULL;
 	rt->object = NULL;
@@ -79,9 +78,13 @@ char    *get_buffer(t_rt *rt)
 {
     char *buff;
     char *line;
+	int  d;
 
-    while (get_next_line(rt->fd, &line) > 0)
+	buff = NULL;
+    while ((d = get_next_line(rt->fd, &line)) != 0)
     {
+		if (d == -1)
+			rt_close2(&rt);
 		if(rt->nb_line == 0)
 			buff =	ft_mystrjoin(line, "\n", 'F');
 		else
@@ -90,7 +93,6 @@ char    *get_buffer(t_rt *rt)
 			return (NULL);
        rt->nb_line++;
     }
-
     close(rt->fd);
     return (buff);
 }

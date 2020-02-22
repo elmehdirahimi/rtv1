@@ -6,77 +6,71 @@
 /*   By: erahimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 12:18:19 by erahimi           #+#    #+#             */
-/*   Updated: 2019/04/19 22:55:02 by erahimi          ###   ########.fr       */
+/*   Updated: 2020/02/21 12:09:00 by erahimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	nbmot(const char *s, char x)
+static int		ft_len(const char *str, int i, char c)
 {
-	int nb;
+	int		size;
 
-	nb = 0;
-	while (*s)
+	size = 0;
+	while (str[i] != c && str[i] != '\0')
 	{
-		if (*s != x && (*(s + 1) == x || !(*(s + 1))))
-			nb++;
-		s++;
+		size++;
+		i++;
 	}
-	return (nb);
+	return (size);
 }
 
-static int	*tab_size(const char *s, char x)
+static int		ft_w(const char *str, char c)
 {
-	int *tab;
-	int nb;
-	int i;
-
-	i = 0;
-	nb = nbmot(s, x);
-	if (!(tab = (int *)malloc(sizeof(int) * nb)))
-		return (NULL);
-	while (nb)
-	{
-		tab[nb - 1] = 0;
-		nb--;
-	}
-	while (*s)
-	{
-		if (*s != x)
-			tab[i] = tab[i] + 1;
-		if (*s != x && (*(s + 1) == x || !(*(s + 1))))
-			i++;
-		s++;
-	}
-	return (tab);
-}
-
-char		**ft_strsplit(char const *s, char x)
-{
-	char	**fin_tab;
-	int		*tab;
-	int		nb;
 	int		i;
+	int		size;
 
-	if (s == NULL)
-		return (NULL);
-	tab = tab_size(s, x);
-	nb = nbmot(s, x);
 	i = 0;
-	if (!(fin_tab = (char **)malloc(sizeof(char *) * (nb + 1))))
-		return (NULL);
-	while (i < nb)
+	size = 0;
+	while (str[i] != '\0')
 	{
-		if (!(fin_tab[i] = (char *)malloc(sizeof(char) * tab[i])))
-			return (NULL);
-		while (*s == x)
-			s++;
-		fin_tab[i] = ft_strncpy(fin_tab[i], s, tab[i]);
-		fin_tab[i][tab[i]] = '\0';
-		s = s + tab[i++];
+		if (str[i] == c)
+			i++;
+		else
+		{
+			while (str[i] != c && str[i] != '\0')
+				i++;
+			size++;
+		}
 	}
-	fin_tab[i] = 0;
-	free(tab);
-	return (fin_tab);
+	return (size);
+}
+
+char			**ft_strsplit(const char *str, char c)
+{
+	int		i;
+	int		j;
+	int		k;
+	char	**dest;
+
+	i = 0;
+	k = 0;
+	if (!(str) || !(dest = (char**)malloc((ft_w(str, c) + 1) * sizeof(char*))))
+		return (NULL);
+	while (str[k])
+	{
+		while (str[k] == c && str[k])
+			k++;
+		if (str[k] && ft_w(str, c))
+		{
+			j = 0;
+			if (!(dest[i] = (char*)malloc((ft_len(str, k, c) + 1))))
+				return (NULL);
+			while (str[k] != c && str[k])
+				dest[i][j++] = str[k++];
+			dest[i++][j] = '\0';
+		}
+	}
+	dest[i] = 0;
+	return (dest);
 }
